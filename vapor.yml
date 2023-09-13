@@ -1,9 +1,10 @@
-id: 51990
+id: 51992
 name: steiner-directory
 environments:
     production:
         domain: steiner.directory
         storage: steiner-directory-assets
+        database: vapor
         memory: 1024
         cli-memory: 512
         runtime: 'php-8.2:al2'

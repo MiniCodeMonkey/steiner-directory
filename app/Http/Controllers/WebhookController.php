@@ -38,6 +38,16 @@ class WebhookController extends Controller
     private function handleListPublish(MessageList $list, string $message)
     {
         info('Publish ' . $message . ' to ' . $list->name);
+        $count = 0;
+
+        foreach ($list->subscribers as $subscriber) {
+            if ($subscriber->phone != $list->phone_owner) {
+                $this->sendMessage($subscriber->phone, $message);
+                $count++;
+            }
+        }
+
+        $this->sendMessage($list->phone_owner, 'Beskeden er blevet send til ' . $count . ' modtagere');
 
         return 'OK';
     }
@@ -50,7 +60,7 @@ class WebhookController extends Controller
             $subscriber->delete();
             $this->sendMessage($phone, 'Du er blevet afmeldt fra listen.');
         } else {
-            $this->sendMessage($phone, 'Du er i øjeblikket på listen. Svar "afmeld" hvis du ikke længere vil være på listen.');
+            $this->sendMessage($phone, 'Du er i øjeblikket på listen. Svar "afmeld" hvis du ikke længere vil være på listen. Hvis du vil svare på en besked skal du skrive direkte til Tulle.');
         }
 
         return 'OK';
@@ -104,6 +114,7 @@ class WebhookController extends Controller
             'send-message:'.$phone,
             3,
             function() use ($message, $fromNumber, $phone) {
+                info('To: ' . $phone . ' => ' . $message);
                 $this->twilioClient->messages->create(
                     $phone,
                     [

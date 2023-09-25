@@ -98,9 +98,11 @@ class WebhookController extends Controller
             $lists = MessageList::all();
             foreach ($lists as $list) {
                 $subscriber->messageLists()->attach($list);
+                $this->sendMessage($list->phone_owner, $subscriber->name . ' som er forældre til ' . $subscriber->child_name . ' er blevet tilmeldt til listen.');
             }
 
             cache()->forget($cacheKey);
+
             return $this->sendMessage($phone, 'Du er blevet tilmeldt og får nu beskeder når Tulle skriver ud.');
         }
 

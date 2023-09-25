@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MessageList extends Model
 {
     public function subscribers() {
-        return $this->hasMany(Subscriber::class);
+        return $this->belongsToMany(Subscriber::class);
     }
 
     public function messages() {

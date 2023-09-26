@@ -49,7 +49,7 @@ class SendMessageJob implements ShouldQueue
 
             if (!config('app.debug')) {
                 $this->twilioClient->messages->create(
-                    $phone,
+                    $this->phone,
                     [
                         'from' => $fromNumber,
                         'body' => $this->message

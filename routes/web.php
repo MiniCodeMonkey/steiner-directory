@@ -17,5 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('login', [App\Http\Controllers\LoginController::class, 'showForm']);
+Route::post('login', [App\Http\Controllers\LoginController::class, 'handleSubmit']);
 
 Route::post('webhook', App\Http\Controllers\WebhookController::class);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('feed', App\Http\Controllers\FeedController::class);
+});

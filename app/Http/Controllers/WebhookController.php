@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MessageList;
+use App\Models\Message;
 use App\Models\Subscriber;
 use App\Jobs\SendMessageJob;
 use Illuminate\Http\Request;
@@ -28,19 +29,16 @@ class WebhookController extends Controller
         }
     }
 
-    private function handleListPublish(MessageList $list, string $message)
+    private function handleListPublish(MessageList $list, string $body)
     {
-        info('Publish ' . $message . ' to ' . $list->name);
-        $count = 0;
+        info('Publish ' . $body . ' to ' . $list->name);
 
-        foreach ($list->subscribers as $subscriber) {
-            if ($subscriber->phone != $list->phone_owner) {
-                $this->sendMessage($subscriber->phone, $message);
-                $count++;
-            }
-        }
+        $message = new Message();
+        $message->phone_from = $list->phone_owner;
+        $message->message = $body;
+        $list->messages()->save($message);
 
-        $this->sendMessage($list->phone_owner, 'Beskeden er blevet send til ' . $count . ' modtagere');
+        $message->send();
 
         return 'OK';
     }

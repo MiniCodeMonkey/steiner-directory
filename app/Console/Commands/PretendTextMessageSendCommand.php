@@ -11,7 +11,7 @@ class PretendTextMessageSendCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'text {message}';
+    protected $signature = 'text {message} {--from=+4512345678}';
 
     /**
      * The console command description.
@@ -28,7 +28,7 @@ class PretendTextMessageSendCommand extends Command
         $client = new \GuzzleHttp\Client();
         $res = $client->request('POST', config('app.url') . ':8000/webhook', [
             'json' => [
-                'From' => '+4512345678',
+                'From' => $this->option('from'),
                 'Body' => $this->argument('message')
             ]
         ]);

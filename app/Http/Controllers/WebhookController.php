@@ -4,18 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\MessageList;
 use App\Models\Subscriber;
+use App\Jobs\SendMessageJob;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
-use Twilio\Rest\Client;
 
 class WebhookController extends Controller
 {
-    private Client $twilioClient;
-
-    public function __construct(Client $twilioClient) {
-        $this->twilioClient = $twilioClient;
-    }
-
     public function __invoke(Request $request) {
         $phone = $request->input('From');
         $message = trim($request->input('Body'));
@@ -110,26 +103,7 @@ class WebhookController extends Controller
     }
 
     private function sendMessage(string $phone, string $message) {
-        $fromNumber = config('services.twilio.from_number');
-
-        $executed = RateLimiter::attempt(
-            'send-message:'.$phone,
-            3,
-            function() use ($message, $fromNumber, $phone) {
-                info('To: ' . $phone . ' => ' . $message);
-                $this->twilioClient->messages->create(
-                    $phone,
-                    [
-                        'from' => $fromNumber,
-                        'body' => $message
-                    ]
-                );
-            }
-        );
-
-        if (!$executed) {
-            info('Rate limit exceeded for ' . $phone);
-        }
+        SendMessageJob::dispatch($phone, $message);
 
         return 'OK';
     }

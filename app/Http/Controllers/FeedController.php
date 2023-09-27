@@ -17,6 +17,6 @@ class FeedController extends Controller
             }
         }
 
-        return view('feed', ['messages' => $messages]);
+        return view('feed', ['messages' => $messages, 'subscriber' => $subscriber]);
     }
 }

@@ -23,4 +23,8 @@ class Subscriber extends Authenticatable
     public function messageLists() {
         return $this->belongsToMany(MessageList::class, 'list_subscriber');
     }
+
+    public function canPublish(): bool {
+        return MessageList::where('phone_owner', $this->phone)->count() > 0;
+    }
 }

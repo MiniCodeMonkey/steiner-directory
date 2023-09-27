@@ -24,4 +24,9 @@ Route::post('webhook', App\Http\Controllers\WebhookController::class);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('feed', App\Http\Controllers\FeedController::class);
+
+    Route::middleware(['publisher'])->group(function () {
+        Route::get('publish', [App\Http\Controllers\PublishController::class, 'showForm']);
+        Route::post('publish', [App\Http\Controllers\PublishController::class, 'handleSubmit']);
+    });
 });

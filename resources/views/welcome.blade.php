@@ -3,7 +3,9 @@
 <header class="absolute inset-x-0 top-0 z-50">
   <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
     <div class="flex flex-1 justify-end">
+      {{--
       <a href="{{ url('login') }}" class="text-sm font-semibold leading-6 text-gray-900">Log ind <span aria-hidden="true">&rarr;</span></a>
+      --}}
     </div>
   </nav>
 </header>
@@ -57,6 +59,25 @@
         <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">Hvem kan modtage beskeder?</dt>
         <dd class="mt-4 lg:col-span-7 lg:mt-0">
           <p class="text-base leading-7 text-gray-600">Listen er kun for forældre i 4. Klasse på Steiner Skolen i Vordingborg</p>
+        </dd>
+      </div>
+      <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+        <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">Hvem kan sende beskeder til listen?</dt>
+        <dd class="mt-4 lg:col-span-7 lg:mt-0">
+          <p class="text-base leading-7 text-gray-600">Det er kun Tulle der kan skrive ud på listen.</p>
+        </dd>
+      </div>
+      <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+        <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">Kan billeder sendes ud?</dt>
+        <dd class="mt-4 lg:col-span-7 lg:mt-0">
+          <p class="text-base leading-7 text-gray-600">Jeg arbejder på at gøre dette muligt.</p>
+        </dd>
+      </div>
+
+      <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+        <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">Koster det noget?</dt>
+        <dd class="mt-4 lg:col-span-7 lg:mt-0">
+          <p class="text-base leading-7 text-gray-600">Det koster ingenting (udover alm. SMS takst) at sende og modtage disse beskeder.</p>
         </dd>
       </div>
     </dl>

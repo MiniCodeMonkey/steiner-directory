@@ -12,7 +12,7 @@ class FeedController extends Controller
         $messages = collect();
 
         foreach ($subscriber->messageLists as $list) {
-            foreach ($list->messages()->orderBy('id')->take(5)->get() as $message) {
+            foreach ($list->messages()->orderBy('id', 'DESC')->get() as $message) {
                 $messages->push($message);
             }
         }
